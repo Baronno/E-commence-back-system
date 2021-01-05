@@ -1,29 +1,82 @@
 <template>
-<div class="login_container">
+  <div class="login_container">
     <div class="login_box">
-    <div style="width:100px; height:100px; position: absolute; left: 50%; transform: translate(-50% );background:#eee">
-        <img src="../assets/images.jpg" alt="" style="height:100%;width:100%">
-        </div>
+      <!--   login picture -->
+      <div
+        style="
+          width: 100px;
+          height: 100px;
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%);
+          background: #eee;
+        "
+      >
+        <img
+          src="../assets/images.jpg"
+          alt=""
+          style="height: 100%; width: 100%"
+        />
+      </div>
+      <!-- login form  -->
+      <el-form :model="loginForm" label-width="100px" class="login_form">
+        <!-- username -->
+        <el-form-item label="username:">
+          <el-input v-model="loginForm.username" placeholder="username"></el-input>
+        </el-form-item>
+        <!--  password -->
+        <el-form-item label="password:">
+          <el-input v-model="loginForm.password" placeholder="password" type="password"></el-input>
+        </el-form-item>
+        <!-- button -->
+        <el-form-item class="btns">
+          <el-button type="primary" round>login</el-button>
+          <el-button type="primary" round>reset</el-button>
+        </el-form-item>
+      </el-form>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
+export default {
+  data () {
+    return {
+      /* this is login form  */
+      loginForm: {
+        username: 'zj',
+        password: '123'
+      }
+    }
+  }
+}
+
 </script>
 
 <style lang= "less" scoped>
-.login_container{
-    background-color: #cc3232;
-    height: 100%;
+.login_container {
+  background-color: #cc3232;
+  height: 100%;
 }
 .login_box {
-    height: 300px;
-    width: 450px;
-    background-color: #ffffff;
-    border-radius: 3px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
+  height: 300px;
+  width: 450px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.login_form {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+.btns {
+  display: flex;
+  justify-content: flex-start;
 }
 </style>
