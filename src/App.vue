@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    根组件
+    <!-- takeup the position-->
+    <router-view></router-view>
   </div>
 </template>
 
