@@ -19,7 +19,7 @@
         />
       </div>
       <!-- login form  -->
-      <el-form :model="loginForm" :rules="loginFormRules" label-width="100px" class="login_form">
+      <el-form :model="loginForm" :rules="loginFormRules" ref='loginFormRef' label-width="100px" class="login_form">
         <!-- username -->
         <el-form-item prop="username" label="username:" >
           <el-input v-model="loginForm.username" placeholder="username" ></el-input>
@@ -31,7 +31,7 @@
         <!-- button -->
         <el-form-item class="btns">
           <el-button type="primary" round>login</el-button>
-          <el-button type="primary" round>reset</el-button>
+          <el-button type="primary" round @click="resetLoginForm">reset</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -61,6 +61,13 @@ export default {
 
         ]
       }
+    }
+  },
+  methods: {
+    /* this method is for click reset the loginform function */
+    resetLoginForm () {
+      /*  console.log(this) */
+      this.$refs.loginFormRef.resetFields()
     }
   }
 }
