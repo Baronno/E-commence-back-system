@@ -19,13 +19,13 @@
         />
       </div>
       <!-- login form  -->
-      <el-form :model="loginForm" label-width="100px" class="login_form">
+      <el-form :model="loginForm" :rules="loginFormRules" label-width="100px" class="login_form">
         <!-- username -->
-        <el-form-item label="username:">
-          <el-input v-model="loginForm.username" placeholder="username"></el-input>
+        <el-form-item prop="username" label="username:" >
+          <el-input v-model="loginForm.username" placeholder="username" ></el-input>
         </el-form-item>
         <!--  password -->
-        <el-form-item label="password:">
+        <el-form-item prop="password" label="password:" >
           <el-input v-model="loginForm.password" placeholder="password" type="password"></el-input>
         </el-form-item>
         <!-- button -->
@@ -44,8 +44,22 @@ export default {
     return {
       /* this is login form  */
       loginForm: {
-        username: 'zj',
-        password: '123'
+        username: '',
+        password: ''
+      },
+      /* this is the validation rule */
+      loginFormRules: {
+        /* validate if the username is allowed */
+        username: [
+          { required: true, message: 'Please input username', trigger: 'blur' },
+          { min: 3, max: 10, message: 'Length should be 3 to 10', trigger: 'blur' }
+        ],
+        /*  validate thepassword */
+        password: [
+          { required: true, message: 'Please input the password', trigger: 'blur' },
+          { min: 6, max: 15, message: 'Length should be 6 to 15', trigger: 'blur' }
+
+        ]
       }
     }
   }
