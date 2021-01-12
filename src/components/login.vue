@@ -1,6 +1,5 @@
 <template>
   <div class="login_container">
-    <div>testing</div>
     <div class="login_box">
       <!--   login picture -->
       <div
@@ -45,7 +44,7 @@ export default {
     return {
       /* this is login form  */
       loginForm: {
-        username: 'zs1',
+        username: 'admin',
         password: '123456'
       },
       /* this is the validation rule */
@@ -74,8 +73,11 @@ export default {
       this.$refs.loginFormRef.validate(async valid => {
         if (!valid);
         const { data: res } = await this.$http.post('login', this.loginForm)
-        if (res.meta.status !== 200) return console.log('login failure')
-        console.log('login success')
+        if (res.meta.status !== 200) return this.$message.error('login failure')
+        this.$message.success('login success!')
+        console.log(res)
+        window.sessionStorage.setItem('token', res.data.token)
+        this.$router.push('/home')
       })
     }
   }
