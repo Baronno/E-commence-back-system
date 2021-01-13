@@ -42,7 +42,7 @@
 export default {
   data () {
     return {
-      /* this is login form  */
+      /* this is default login form  */
       loginForm: {
         username: 'admin',
         password: '123456'
