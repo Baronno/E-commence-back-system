@@ -6,6 +6,7 @@ import './plugins/element.js'
 import axios from 'axios'
 /* deploy the root path of request */
 axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
+/* get data from server */
 axios.interceptors.request.use(config => {
   console.log(config)
   config.headers.Authorization = window.sessionStorage.getItem('token')
