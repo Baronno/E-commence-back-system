@@ -41,10 +41,19 @@
 
 <script>
 export default {
+  created () {
+    this.getMenuList()
+  },
+
   methods: {
     logout () {
       window.sessionStorage.clear()
       this.$router.push('/login')
+    },
+    /* get all the menu */
+    async getMenuList () {
+      const { data: res } = await this.$http.get('menus')
+      console.log(res)
     }
   }
 }
