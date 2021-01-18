@@ -27,7 +27,7 @@
                   <!-- Icon -->
               <i class="el-icon-location"></i>
               <!-- word -->
-              <span>酒店用品</span>
+              <span>jiudian</span>
             </template>
             </el-menu-item>
           </el-submenu>
@@ -41,10 +41,15 @@
 
 <script>
 export default {
+  data () {
+    return {
+      /* 将获取的数据赋值给我们自己的菜单 */
+      menulist: []
+    }
+  },
   created () {
     this.getMenuList()
   },
-
   methods: {
     logout () {
       window.sessionStorage.clear()
@@ -53,6 +58,8 @@ export default {
     /* get all the menu */
     async getMenuList () {
       const { data: res } = await this.$http.get('menus')
+      if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
+      this.menulist = res.data
       console.log(res)
     }
   }
