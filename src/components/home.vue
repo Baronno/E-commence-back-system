@@ -16,18 +16,19 @@
           active-text-color="#ffd04b"
         >
         <!-- the level 1 menu -->
-          <el-submenu index="1">
+          <el-submenu :index="item.id + ''" v-for ="item in menulist" :key="item.id">
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span>Navigator One</span>
+              <span>{{item.authName}}</span>
             </template>
             <!-- Level 2 menu -->
-              <el-menu-item index="1-1">
+              <el-menu-item :index="subItem.id +''" v-for="subItem in item.children"
+              :key="subItem.id" >
                 <template slot="title">
                   <!-- Icon -->
               <i class="el-icon-location"></i>
               <!-- word -->
-              <span>jiudian</span>
+              <span>{{subItem.authName}}</span>
             </template>
             </el-menu-item>
           </el-submenu>
