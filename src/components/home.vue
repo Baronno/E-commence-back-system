@@ -14,7 +14,7 @@
           background-color="#303133"
           text-color="#fff"
           active-text-color="#409EFF"
-        >
+          unique-open>        >
         <!-- the level 1 menu -->
           <el-submenu :index="item.id + ''" v-for ="item in menulist" :key="item.id">
             <template slot="title">
@@ -89,6 +89,9 @@ export default {
 
 .el-aside {
   background-color: #303133;
+  .el-menu{
+    border-right: 0;
+  }
 }
 
 .el-main {
