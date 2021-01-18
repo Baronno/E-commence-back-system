@@ -13,12 +13,11 @@
         <el-menu
           background-color="#303133"
           text-color="#fff"
-          active-text-color="#ffd04b"
+          active-text-color="#409EFF"
         >
         <!-- the level 1 menu -->
           <el-submenu :index="item.id + ''" v-for ="item in menulist" :key="item.id">
             <template slot="title">
-              <i class="el-icon-location"></i>
               <span>{{item.authName}}</span>
             </template>
             <!-- Level 2 menu -->
@@ -26,7 +25,7 @@
               :key="subItem.id" >
                 <template slot="title">
                   <!-- Icon -->
-              <i class="el-icon-location"></i>
+              <i class="el-icon-s-unfold"></i>
               <!-- word -->
               <span>{{subItem.authName}}</span>
             </template>
