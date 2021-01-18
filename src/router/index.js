@@ -3,14 +3,21 @@ import Router from 'vue-router'
 import login from '../components/login.vue'
 import '../css/global.css'
 import home from '../components/home.vue'
-
+import welcome from '../components/welcome.vue'
 Vue.use(Router)
 
 const router = new Router({
   routes: [
     { path: '/', redirect: '/login' },
     { path: '/login', component: login },
-    { path: '/home', component: home }
+    {
+      path: '/home',
+      component: home,
+      redirect: '/welcome',
+      children: [
+        { path: '/welcome', component: welcome }
+      ]
+    }
   ]
 })
 router.beforeEach((to, from, next) => {
