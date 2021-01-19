@@ -39,8 +39,8 @@
         </el-menu>
       </el-aside>
 
-      <el-main>Main
-        <!-- 占位 -->
+      <el-main>
+        <!-- 占位 insert the welcome page into the home page  -->
         <router-view></router-view>
       </el-main>
     </el-container>
