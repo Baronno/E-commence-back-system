@@ -19,6 +19,7 @@
           :collapse="isCollapse"
           :collapse-transition="false"
           router
+          :default-active="activePath"
           >
         <!-- the level 1 menu -->
           <el-submenu :index="item.id + ''" v-for ="item in menulist" :key="item.id">
@@ -26,8 +27,8 @@
               <span>{{item.authName}}</span>
             </template>
             <!-- Level 2 menu -->
-              <el-menu-item :index=" '/' +subItem.path +''" v-for="subItem in item.children"
-              :key="subItem.id" >
+              <el-menu-item :index=" '/' +subItem.path" v-for="subItem in item.children"
+              :key="subItem.id" @click="saveNavState('/' +subItem.path)">
                 <template slot="title">
                   <!-- Icon -->
               <i class="el-icon-s-unfold"></i>
@@ -54,11 +55,14 @@ export default {
       /* 将获取的数据赋值给我们自己的菜单 */
       menulist: [],
       /* 不折叠 */
-      isCollapse: false
+      isCollapse: false,
+      /* the link being actived */
+      activePath: ''
     }
   },
   created () {
     this.getMenuList()
+    this.activePath = window.sessionStorage.getItem('activePath')
   },
   methods: {
     logout () {
@@ -75,6 +79,11 @@ export default {
     /* click event, switch the menu */
     toggleCollapse () {
       this.isCollapse = !this.isCollapse
+    },
+    // save the state of link
+    saveNavState (activePath) {
+      window.sessionStorage.setItem('activePath', activePath)
+      this.activePath = activePath
     }
   }
 }
