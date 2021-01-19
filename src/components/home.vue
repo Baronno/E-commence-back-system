@@ -18,6 +18,7 @@
           unique-opened
           :collapse="isCollapse"
           :collapse-transition="false"
+          router
           >
         <!-- the level 1 menu -->
           <el-submenu :index="item.id + ''" v-for ="item in menulist" :key="item.id">
@@ -25,7 +26,7 @@
               <span>{{item.authName}}</span>
             </template>
             <!-- Level 2 menu -->
-              <el-menu-item :index="subItem.id +''" v-for="subItem in item.children"
+              <el-menu-item :index=" '/' +subItem.path +''" v-for="subItem in item.children"
               :key="subItem.id" >
                 <template slot="title">
                   <!-- Icon -->
