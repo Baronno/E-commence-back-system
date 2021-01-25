@@ -35,9 +35,13 @@ export default {
   data () {
     return {
       /* get the paramas of user list */
-      query: '',
-      pagenum: 1,
-      pagesize: 2
+      queryInfo: {
+        query: '',
+        pagenum: 1,
+        pagesize: 2
+      },
+      userlist: [],
+      total: 0
     }
   },
   created () {
@@ -46,7 +50,10 @@ export default {
   methods: {
     async getUserList () {
       const { data: res } = await this.$http.get('users', { params: this.queryInfo })
-      if (res.meta.status !== 200) { console.log(res) }
+      if (res.meta.status !== 200) { return this.$message.error('get the wrong message') }
+      this.userlist = res.data.users
+      this.total = res.data.total
+      console.log(res)
     }
   }
 }
