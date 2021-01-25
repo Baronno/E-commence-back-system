@@ -1,5 +1,13 @@
 import Vue from 'vue'
-import { Button, Form, FormItem, Input, Message, Container, Header, Aside, Main, Menu, Submenu, MenuItemGroup, MenuItem } from 'element-ui'
+import {
+  Button,
+  Form,
+  FormItem,
+  Input,
+  Message,
+  Container,
+  Header, Aside, Main, Menu, Submenu, MenuItemGroup, MenuItem, Breadcrumb, BreadcrumbItem, Card, Row, Col
+} from 'element-ui'
 
 Vue.use(Button)
 Vue.use(Form)
@@ -13,4 +21,10 @@ Vue.use(Submenu)
 Vue.use(MenuItemGroup)
 Vue.use(MenuItem)
 Vue.use(Main)
+Vue.use(Breadcrumb)
+Vue.use(BreadcrumbItem)
+Vue.use(Card)
+Vue.use(Row)
+Vue.use(Col)
 Vue.prototype.$message = Message
+/* what's the difference between vue.prototype.$APi= api and vue.use(api) */
