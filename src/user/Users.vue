@@ -12,21 +12,44 @@
     <el-card class="box-card">
       <span>Card name</span>
       <!-- search box and add button -->
-      <div style="margin-top: 15px;">
+      <div style="margin-top: 15px">
         <el-row :gutter="20">
-  <el-col :span="16"><el-input placeholder="Please input" >
-    <el-button slot="append" icon="el-icon-search"></el-button>
-    </el-input></el-col>
-  <el-col :span="4">
-  <el-button type ="primary "> add user</el-button>
-  </el-col>
-</el-row></div>
+          <el-col :span="16"
+            ><el-input placeholder="Please input">
+              <el-button
+                slot="append"
+                icon="el-icon-search"
+              ></el-button> </el-input
+          ></el-col>
+          <el-col :span="4">
+            <el-button type="primary "> add user</el-button>
+          </el-col>
+        </el-row>
+      </div>
     </el-card>
   </div>
 </template>>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      /* get the paramas of user list */
+      query: '',
+      pagenum: 1,
+      pagesize: 2
+    }
+  },
+  created () {
+    this.getUserList()
+  },
+  methods: {
+    async getUserList () {
+      const { data: res } = await this.$http.get('users', { params: this.queryInfo })
+      if (res.meta.status !== 200) { console.log(res) }
+    }
+  }
+}
 </script>
 <style lang="less" scoped>
 </style>
