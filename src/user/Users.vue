@@ -27,7 +27,7 @@
         </el-row>
       </div>
       <!-- use list -->
-      <el-table :data ='userlist' border stripe>
+      <el-table :data ='userlist' border stripe >
         <el-table-column type='index'></el-table-column>
         <el-table-column label ='姓名' prop='username'></el-table-column>
         <el-table-column label ='邮箱' prop='email'></el-table-column>
@@ -39,7 +39,22 @@
 </el-switch>
         </template>
         </el-table-column>
-        <el-table-column label ='操作'></el-table-column>
+        <el-table-column label ='操作' width=' 180px'>
+          <template slot-scope >
+            <!-- edit button -->
+             <el-tooltip effect="dark" content="edit" placement="top" :enterable='false'>
+         <el-button type='primary' icon='el-icon-edit' size ='mini'></el-button>
+    </el-tooltip>
+            <!-- delete button -->
+             <el-tooltip effect="dark" content="delete" placement="top" :enterable='false'>
+        <el-button type='danger' icon='el-icon-delete' size ='mini'></el-button>
+    </el-tooltip>
+            <!-- distribute the role -->
+            <el-tooltip effect="dark" content="distribute the role" placement="top" :enterable='false'>
+       <el-button type='warning' icon='el-icon-setting' size ='mini'></el-button>
+    </el-tooltip>
+          </template>
+        </el-table-column>
       </el-table>
     </el-card>
   </div>
