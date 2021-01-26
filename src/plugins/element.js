@@ -7,7 +7,7 @@ import {
   Message,
   Container,
   Header, Aside, Main, Menu, Submenu, MenuItemGroup, MenuItem, Breadcrumb, BreadcrumbItem, Card, Row, Col,
-  Table, TableColumn, Switch, Tooltip
+  Table, TableColumn, Switch, Tooltip, Pagination
 } from 'element-ui'
 
 Vue.use(Button)
@@ -31,5 +31,6 @@ Vue.use(Table)
 Vue.use(TableColumn)
 Vue.use(Switch)
 Vue.use(Tooltip)
+Vue.use(Pagination)
 Vue.prototype.$message = Message
 /* what's the difference between vue.prototype.$APi= api and vue.use(api) */

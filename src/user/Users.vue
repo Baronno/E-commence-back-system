@@ -40,6 +40,7 @@
         </template>
         </el-table-column>
         <el-table-column label ='操作' width=' 180px'>
+          <!-- didn't use scope -->
           <template slot-scope >
             <!-- edit button -->
              <el-tooltip effect="dark" content="edit" placement="top" :enterable='false'>
@@ -56,6 +57,16 @@
           </template>
         </el-table-column>
       </el-table>
+      <!-- 页面分割 -->
+      <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page.sync="queryInfo.pagenum"
+      :page-sizes="[1, 2, 3, 10]"
+      :page-size="queryInfo.pagesize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
     </el-card>
   </div>
 </template>>
@@ -67,7 +78,9 @@ export default {
       /* get the paramas of user list */
       queryInfo: {
         query: '',
+        /* 当前页面 */
         pagenum: 1,
+        /* 当前页码的数量 */
         pagesize: 2
       },
       userlist: [],
@@ -84,6 +97,18 @@ export default {
       this.userlist = res.data.users
       this.total = res.data.total
       console.log(res)
+    },
+    /* 监听page-size 所改变的事件 */
+    handleSizeChange (newSize) {
+      /* console.log(newSize) */
+      this.queryInfo.pagesize = newSize
+      this.getUserList()
+    },
+    /* 监听page0number 的改变的事件 */
+    handleCurrentChange (newPage) {
+      console.log(newPage)
+      this.queryInfo.pagenum = newPage
+      this.getUserList()
     }
   }
 }
