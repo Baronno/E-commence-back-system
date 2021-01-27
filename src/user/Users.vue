@@ -11,14 +11,16 @@
 
     <el-card class="box-card">
       <span>Card name</span>
-      <!-- search box and add button -->
+      <!-- search box and add button  keyup function need to be added-->
       <div style="margin-top: 15px">
         <el-row :gutter="20">
           <el-col :span="16"
             ><el-input placeholder="Please input"
             v-model='queryInfo.query'
             clearable
-            @clear="getUserList">
+            @clear="getUserList"
+            @keyup.enter='getUserList'
+             >
               <el-button
                 slot="append"
                 icon="el-icon-search"
