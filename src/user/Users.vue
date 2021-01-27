@@ -10,7 +10,7 @@
     -->
 
     <el-card class="box-card">
-      <span>Card name</span>
+      <span>System</span>
       <!-- search box and add button  keyup function need to be added-->
       <div style="margin-top: 15px">
         <el-row :gutter="20">
@@ -28,7 +28,8 @@
               ></el-button> </el-input
           ></el-col>
           <el-col :span="4">
-            <el-button type="primary "> add user</el-button>
+            <el-button type="primary " @click="addDialogVisable =
+            true"> add user</el-button>
           </el-col>
         </el-row>
       </div>
@@ -74,6 +75,17 @@
       :total="total">
     </el-pagination>
     </el-card>
+    <!-- add the user dialog  -->
+    <el-dialog
+  title="Tips"
+  :visible.sync="addDialogVisable"
+  width="50%">
+  <span>This is a message</span>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="addDialogVisable =false">Cancel</el-button>
+    <el-button type="primary" @click="addDialogVisable =false">Confirm</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>>
 
@@ -90,7 +102,9 @@ export default {
         pagesize: 2
       },
       userlist: [],
-      total: 0
+      total: 0,
+      /* control the visablity of dialog */
+      addDialogVisable: false
     }
   },
   created () {
