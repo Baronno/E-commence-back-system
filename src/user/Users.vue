@@ -15,10 +15,14 @@
       <div style="margin-top: 15px">
         <el-row :gutter="20">
           <el-col :span="16"
-            ><el-input placeholder="Please input">
+            ><el-input placeholder="Please input"
+            v-model='queryInfo.query'
+            clearable
+            @clear="getUserList">
               <el-button
                 slot="append"
                 icon="el-icon-search"
+                @click="getUserList"
               ></el-button> </el-input
           ></el-col>
           <el-col :span="4">
