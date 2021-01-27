@@ -35,7 +35,7 @@
         <el-table-column label ='角色' prop='role_name'></el-table-column>
         <el-table-column label ='状态' prop='ms_state'>
         <template slot-scope='scope'>
-          <el-switch v-model="scope.row.mg_state">
+          <el-switch v-model="scope.row.mg_state" @change='userStateChanged(scope.row)'>
 </el-switch>
         </template>
         </el-table-column>
@@ -109,6 +109,15 @@ export default {
       console.log(newPage)
       this.queryInfo.pagenum = newPage
       this.getUserList()
+    },
+    /* listen the state of switch */
+    async userStateChanged (userInfo) {
+      const { data: res } = await this.$http.put(`users/${userInfo.id}/state/${userInfo.mg_state}`)
+      if (res.meta.status !== 200) {
+        userInfo.mg_state = !userInfo.mg_state
+        return this.$mg_state.error('update the user failure!')
+      }
+      this.$message.success('update success')
     }
   }
 }
