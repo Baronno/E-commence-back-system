@@ -29,24 +29,24 @@
           ></el-col>
           <el-col :span="4">
             <el-button type="primary " @click="addDialogVisable =
-            true"> add user</el-button>
+            true">Add user</el-button>
           </el-col>
         </el-row>
       </div>
       <!-- use list -->
       <el-table :data ='userlist' border stripe >
         <el-table-column type='index'></el-table-column>
-        <el-table-column label ='姓名' prop='username'></el-table-column>
-        <el-table-column label ='邮箱' prop='email'></el-table-column>
-        <el-table-column label ='电话' prop='mobile'></el-table-column>
-        <el-table-column label ='角色' prop='role_name'></el-table-column>
-        <el-table-column label ='状态' prop='ms_state'>
+        <el-table-column label ='Name' prop='username'></el-table-column>
+        <el-table-column label ='Email' prop='email'></el-table-column>
+        <el-table-column label ='Phone' prop='mobile'></el-table-column>
+        <el-table-column label ='Role' prop='role_name'></el-table-column>
+        <el-table-column label ='State' prop='ms_state'>
         <template slot-scope='scope'>
           <el-switch v-model="scope.row.mg_state" @change='userStateChanged(scope.row)'>
 </el-switch>
         </template>
         </el-table-column>
-        <el-table-column label ='操作' width=' 180px'>
+        <el-table-column label ='Operation' width=' 180px'>
           <!-- didn't use scope -->
           <template slot-scope >
             <!-- edit button -->
@@ -76,23 +76,56 @@
     </el-pagination>
     </el-card>
     <!-- add the user dialog  -->
-    <el-dialog
-    title='Tips'
-    :visible.sync="addDialogVisable"
-    width="50%">
-    <span>This is a message</span>
+   <el-dialog
+  title="add user"
+  :visible.sync="addDialogVisable"
+  width="40%">
+  <!-- add user content -->
+  <el-form ref="addFormRef" :model="addForm" :rules="addFormRules" label-width="70px">
+  <el-form-item label="user" prop = 'username'>
+    <el-input v-model="addForm.username"></el-input>
+  </el-form-item>
+  <el-form-item label="pd" prop = 'password'>
+    <el-input v-model="addForm.password"></el-input>
+  </el-form-item>
+  <el-form-item label="email" prop = 'email'>
+    <el-input v-model="addForm.email"></el-input>
+  </el-form-item>
+  <el-form-item label="phone" prop = 'phone'>
+    <el-input v-model="addForm.phone"></el-input>
+  </el-form-item>
+  </el-form>
 
-      <!-- 底部区域 -->
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="addDialogVisible = false">取 消</el-button>
-      </span>
-    </el-dialog>
+        <!-- button area -->
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="addDialogVisable = false">Cancel</el-button>
+    <el-button type="primary" @click="addDialogVisable = false">Confirm</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>>
 
 <script>
 export default {
   data () {
+    var checkEmail = (rule, value, cb) => {
+      /* //validate the email rule  */
+      const regEmail = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/
+      if (regEmail.test(value)) {
+        return cb()
+      }
+      cb(new Error('Please input the right email address'))
+    }
+    var checkMobile = (rule, value, cb) => {
+      /* 正则表达式 */
+      const regMobile = /^(0|86|17951)?(13[0-9]|15[0123456789]|17[678]|18[0-9]|14[57])[0-9]{8}$/
+
+      if (regMobile.test(value)) {
+        // eslint-disable-next-line standard/no-callback-literal
+        return cb()
+      }
+      cb(new Error('please input the right number'))
+    }
     return {
       /* get the paramas of user list */
       queryInfo: {
@@ -105,9 +138,46 @@ export default {
       userlist: [],
       total: 0,
       /* control the visablity of dialog */
-      addDialogVisable: false
+      addDialogVisable: false,
       /* add the form data of user */
-
+      addForm: {
+        username: '',
+        password: '',
+        email: '',
+        phone: ''
+      },
+      /* add the validation rules of form */
+      addFormRules: {
+        username: [{
+          required: true,
+          message: 'Please input your username',
+          trigger: 'blur'
+        },
+        { min: 3, max: 10, message: 'the length of username is between 3-10' }],
+        password: [{
+          required: true,
+          message: 'Please input your password',
+          trigger: 'blur'
+        },
+        { min: 6, max: 13, message: 'the length of password is between 6-12' }],
+        email: [{
+          required: true,
+          message: 'Please input your email address',
+          trigger: 'blur'
+        }, {
+          validator: checkEmail,
+          trigger: 'blur'
+        }],
+        phone: [{
+          required: true,
+          message: 'please input your number',
+          trigger: 'blur'
+        }, {
+          validator: checkMobile,
+          trigger: 'blur'
+        }
+        ]
+      }
     }
   },
   created () {
