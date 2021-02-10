@@ -79,7 +79,8 @@
    <el-dialog
   title="add user"
   :visible.sync="addDialogVisable"
-  width="40%">
+  width="40%"
+  @close ='addDialogClosed'>
   <!-- add user content -->
   <el-form ref="addFormRef" :model="addForm" :rules="addFormRules" label-width="70px">
   <el-form-item label="user" prop = 'username'>
@@ -211,6 +212,10 @@ export default {
         return this.$mg_state.error('update the user failure!')
       }
       this.$message.success('update success')
+    },
+    /* listen the the close of dialog */
+    addDialogClosed () {
+      this.$refs.addFormRef.resetFields()
     }
   }
 }
