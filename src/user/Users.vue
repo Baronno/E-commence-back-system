@@ -100,7 +100,7 @@
         <!-- button area -->
   <span slot="footer" class="dialog-footer">
     <el-button @click="addDialogVisable = false">Cancel</el-button>
-    <el-button type="primary" @click="addDialogVisable = false">Confirm</el-button>
+    <el-button type="primary" @click="addUser">Confirm</el-button>
   </span>
 </el-dialog>
   </div>
@@ -215,7 +215,25 @@ export default {
     },
     /* listen the the close of dialog */
     addDialogClosed () {
-      this.$refs.addFormRef.resetFields()
+      /* this.$refs.addFormRef.resetFields() */
+    },
+    // add button to add user
+    addUser () {
+      this.$refs.addFormRef.validate(async valid => {
+        if (!valid) return
+        // http request
+
+        const { data: res } = await this.$http.post('users', this.addForm)
+        if (res.meta.status !== 201) {
+          this.$message.error('add use failure')
+        }
+
+        this.$message.success('add user successful')
+        // make the dialog disvisiable after update successful
+        this.addDialogVisable = false
+        // get the list again
+        this.getUserList()
+      })
     }
   }
 }
