@@ -38,7 +38,7 @@
         <el-table-column type='index'></el-table-column>
         <el-table-column label ='Name' prop='username'></el-table-column>
         <el-table-column label ='Email' prop='email'></el-table-column>
-        <el-table-column label ='Phone' prop='mobile'></el-table-column>
+        <el-table-column label ='mobile' prop='mobile'></el-table-column>
         <el-table-column label ='Role' prop='role_name'></el-table-column>
         <el-table-column label ='State' prop='ms_state'>
         <template slot-scope='scope'>
@@ -48,14 +48,12 @@
         </el-table-column>
         <el-table-column label ='Operation' width=' 180px'>
           <!-- didn't use scope -->
-          <template slot-scope >
+          <template slot-scope ='scope' >
             <!-- edit button -->
-             <el-tooltip effect="dark" content="edit" placement="top" :enterable='false'>
-         <el-button type='primary' icon='el-icon-edit' size ='mini'></el-button>
-    </el-tooltip>
+         <el-button type='primary' icon='el-icon-edit' size ='mini' @click='showEditDialog(scope.row.id)'></el-button>
             <!-- delete button -->
              <el-tooltip effect="dark" content="delete" placement="top" :enterable='false'>
-        <el-button type='danger' icon='el-icon-delete' size ='mini'></el-button>
+        <el-button type='danger' icon='el-icon-delete' size ='mini' @click="removeUserById(scope.row.id)"></el-button>
     </el-tooltip>
             <!-- distribute the role -->
             <el-tooltip effect="dark" content="distribute the role" placement="top" :enterable='false'>
@@ -69,7 +67,7 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page.sync="queryInfo.pagenum"
-      :page-sizes="[1, 2, 3, 10]"
+      :page-sizes="[1, 2, 6, 10]"
       :page-size="queryInfo.pagesize"
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
@@ -92,8 +90,8 @@
   <el-form-item label="email" prop = 'email'>
     <el-input v-model="addForm.email"></el-input>
   </el-form-item>
-  <el-form-item label="phone" prop = 'phone'>
-    <el-input v-model="addForm.phone"></el-input>
+  <el-form-item label="mobile" prop = 'mobile'>
+    <el-input v-model="addForm.mobile"></el-input>
   </el-form-item>
   </el-form>
 
@@ -101,6 +99,27 @@
   <span slot="footer" class="dialog-footer">
     <el-button @click="addDialogVisable = false">Cancel</el-button>
     <el-button type="primary" @click="addUser">Confirm</el-button>
+  </span>
+</el-dialog>
+<!-- Edit user dialog -->
+<el-dialog
+  title="Edit users"
+  :visible.sync="editDialogVisible"
+  width="50%">
+  <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="80px" @close ='editDialogClosed'>
+  <el-form-item label="username">
+    <el-input v-model="editForm.username" disabled></el-input>
+  </el-form-item>
+    <el-form-item label="email">
+    <el-input v-model="editForm.email" prop= 'email'></el-input>
+  </el-form-item>
+      <el-form-item label="mobile">
+    <el-input v-model="editForm.mobile" prop= 'mobile'></el-input>
+  </el-form-item>
+  </el-form>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="editDialogVisible = false">Cancel</el-button>
+    <el-button type="primary" @click="editUserInfo">Confirm</el-button>
   </span>
 </el-dialog>
   </div>
@@ -145,7 +164,7 @@ export default {
         username: '',
         password: '',
         email: '',
-        phone: ''
+        mobile: ''
       },
       /* add the validation rules of form */
       addFormRules: {
@@ -169,7 +188,32 @@ export default {
           validator: checkEmail,
           trigger: 'blur'
         }],
-        phone: [{
+        mobile: [{
+          required: true,
+          message: 'please input your number',
+          trigger: 'blur'
+        }, {
+          validator: checkMobile,
+          trigger: 'blur'
+        }
+        ]
+      },
+      /* control to see if the dialog visable or not */
+      editDialogVisible: false,
+      /* the object to store the searched data */
+      editForm: {
+      },
+      /* the validation for editForm */
+      editFormRules: {
+        email: [{
+          required: true,
+          message: 'Please input your email address',
+          trigger: 'blur'
+        }, {
+          validator: checkEmail,
+          trigger: 'blur'
+        }],
+        mobile: [{
           required: true,
           message: 'please input your number',
           trigger: 'blur'
@@ -190,7 +234,6 @@ export default {
       if (res.meta.status !== 200) { return this.$message.error('get the wrong message') }
       this.userlist = res.data.users
       this.total = res.data.total
-      console.log(res)
     },
     /* 监听page-size 所改变的事件 */
     handleSizeChange (newSize) {
@@ -234,7 +277,62 @@ export default {
         // get the list again
         this.getUserList()
       })
+    },
+    // show the dialog to edit user
+    async showEditDialog (id) {
+      /* API to request the data */
+      const { data: res } = await this.$http.get('users/' + id)
+      if (res.meta.status !== 200) {
+        return this.$message.error('cannot search the message')
+      }
+      this.editForm = res.data
+      this.editDialogVisible = true
+    },
+    /* listen the event of user close dialog */
+    editDialogClosed () {
+      this.$refs.editFormRef.resetFields()
+    },
+    /* validate the edit form before confirm, update success but validate failed */
+    editUserInfo () {
+      this.$refs.editFormRef.validate(async valid => {
+        if (!valid) return
+        const { data: res } = await this.$http.put(
+          'users/' + this.editForm.id,
+          {
+            email: this.editForm.email,
+            mobile: this.editForm.mobile
+          })
+        if (res.meta.status !== 200) {
+          return this.$message.error('update failure')
+        }
+        // close the dialog after submit
+        this.editDialogVisible = false
+        // refresh the data list
+        this.getUserList()
+        // the notification to notify
+        this.$message.success('update successful')
+      })
+    },
+    // 根据ID 去删除对应的用户
+    async removeUserById (id) {
+      const confirmResult = await this.$confirm('This will permanently delete the file. Continue?', 'Warning', {
+        confirmButtonText: 'OK',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      }).catch(err => err)
+      /* if the user confirm delete, return the string confirm,
+if the user cancel delete, reutrn the string cancel */
+      if (confirmResult !== 'confirm') {
+        return this.$message.info('Cancel the delete')
+      }
+      const { data: res } = await this.$http.delete('users/' + id)
+      if (res.meta.status !== 200) {
+        return this.$message.error('delete unsuccessful')
+      }
+      this.$message.success('delete successful')
+      this.getUserList()
     }
+
   }
 }
 </script>
