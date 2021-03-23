@@ -5,6 +5,7 @@ import router from './router'
 import './plugins/element.js'
 import axios from 'axios'
 /* deploy the root path of request */
+//axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
 axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
 /* get data from server */
 axios.interceptors.request.use(config => {
