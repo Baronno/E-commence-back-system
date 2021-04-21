@@ -1,31 +1,22 @@
 <template>
-  <div class="login_container">
+  <div class="login_container" >
     <div class="login_box">
       <!--   login picture -->
-      <div
-        style="
-          width: 100px;
-          height: 100px;
-          position: absolute;
-          left: 50%;
-          transform: translate(-50%);
-          background: #eee;
-        "
-      >
+      <div class ='avatar_box' >
         <img
           src="../assets/images.jpg"
           alt=""
           style="height: 100%; width: 100%"
-        />
+        >
       </div>
       <!-- login form  -->
       <el-form :model="loginForm" :rules="loginFormRules" ref='loginFormRef' label-width="100px" class="login_form">
         <!-- username -->
-        <el-form-item prop="username" label="username:" >
+        <el-form-item prop="username" label="Username:" >
           <el-input v-model="loginForm.username" placeholder="username" ></el-input>
         </el-form-item>
         <!--  password -->
-        <el-form-item prop="password" label="password:" >
+        <el-form-item prop="password" label="Password:" >
           <el-input v-model="loginForm.password" placeholder="password" type="password"></el-input>
         </el-form-item>
         <!-- button -->
@@ -86,13 +77,21 @@ export default {
 
 <style lang= "less" scoped>
 .login_container {
-  background-color: #cc3232;
-  height: 100%;
+ background: linear-gradient(blue, pink);
+ height:100%;
+}
+.avatar_box {
+     width: 100px;
+     height: 70px;
+     position: absolute;
+     transform: translate(-50%);
+     background: #eee;
+     left: 50%;
 }
 .login_box {
-  height: 300px;
-  width: 450px;
-  background-color: #ffffff;
+  height:300px;
+  width:300px;
+ background: pink;
   border-radius: 3px;
   position: absolute;
   left: 50%;
