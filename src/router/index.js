@@ -13,6 +13,7 @@ const router = new Router({
     { path: '/home', component: home }
   ]
 })
+//
 router.beforeEach((to, from, next) => {
   /* to means the path will visit */
   /* from means where the visit comes from */
