@@ -3,14 +3,15 @@
     <el-header>
       <div>
         <img src="../assets/Logo(已去底).png" alt="" />
-        <span>HOTEL MANAGEMENT SYSTEM</span>
+        <span>Order Management System</span>
       </div>
       <el-button type="info" @click="logout">Exit </el-button></el-header
     >
     <el-container>
       <!-- this is the aside menu -->
-      <el-aside :width="isCollapse ? '5px' : '200px'">
-        <div class ="toggle-button" @click= "toggleCollapse">!</div>
+      <el-aside :width="isCollapse ? '70px' : '200px'">
+        <div class ="toggle-button" @click= "toggleCollapse" icon ='el-icon-menu'>
+        <span class ='el-icon-menu'></span>Menu</div>
         <el-menu
           background-color="#303133"
           text-color="#fff"
@@ -24,6 +25,9 @@
         <!-- the level 1 menu -->
           <el-submenu :index="item.id + ''" v-for ="item in menulist" :key="item.id">
             <template slot="title">
+            <!-- Icon -->
+           <i :class="iconsObj[item.id]"></i>
+           <!-- text-->
               <span>{{item.authName}}</span>
             </template>
             <!-- Level 2 menu -->
@@ -31,7 +35,7 @@
               :key="subItem.id" @click="saveNavState('/' +subItem.path)">
                 <template slot="title">
                   <!-- Icon -->
-              <i class="el-icon-s-unfold"></i>
+                  <i class="el-icon-menu"></i>
               <!-- word -->
               <span>{{subItem.authName}}</span>
             </template>
@@ -54,6 +58,13 @@ export default {
     return {
       /* 将获取的数据赋值给我们自己的菜单 */
       menulist: [],
+      iconsObj: {
+        125: 'iconfont icon-user',
+        103: 'iconfont icon-tijikongjian',
+        101: 'iconfont icon-shangpin',
+        102: 'iconfont icon-danju',
+        145: 'iconfont icon-baobiao'
+      },
       /* 不折叠 */
       isCollapse: false,
       /* the link being actived */
@@ -100,7 +111,7 @@ export default {
   padding-left: 0;
   align-items: center;
   color: #fff;
-  font-size: 20px;
+  font-size: 22px;
   div {
     display: flex;
     align-items: center;
@@ -120,9 +131,12 @@ export default {
 .el-main {
   background-color: rgba(19, 15, 15, 0.2);
 }
+.iconfont {
+  margin: 10px
+}
 .toggle-button{
   background-color: #303133 ;
-  font-size: 10px;
+  font-size: 15px;
   line-height: 24px;
   color:#fff;
   text-align: center;

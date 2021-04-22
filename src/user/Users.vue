@@ -31,7 +31,7 @@
             <el-button type="primary " @click="addDialogVisable =
             true">Add user</el-button>
           </el-col>
-        </el-row>
+     </el-row>
       </div>
       <!-- use list -->
       <el-table :data ='userlist' border stripe >

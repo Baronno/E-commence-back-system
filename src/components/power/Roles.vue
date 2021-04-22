@@ -12,18 +12,31 @@
           <el-button type="primary">Add Role</el-button>
         </el-col>
       </el-row>
-      <el-table :data ="rolelist" border>
+      <el-table :data="rolelist" border>
         <!-- index for details -->
-      <el-table-column type ="index"></el-table-column>
-      <el-table-column label= "Role Name" prop="roleName"></el-table-column>
-      <el-table-column label="Role description" prop="roleDesc"></el-table-column>
-      <el-table-column label="Operation" width =300px>
-      <template >
-      <el-button size="mini" type="primary" icon="el-icon-edit">Edit</el-button>
-            <el-button size="mini" type="danger" icon="el-icon-delete">Delete</el-button>
-            <el-button size="mini" type="warning" icon="el-icon-setting" @click="showSetRightDialog(scope.row)">Distribute</el-button>
-      </template>
-      </el-table-column>
+        <el-table-column type="index"></el-table-column>
+        <el-table-column label="Role Name" prop="roleName"></el-table-column>
+        <el-table-column
+          label="Role description"
+          prop="roleDesc"
+        ></el-table-column>
+        <el-table-column label="Operation" width="300px">
+          <template>
+            <el-button size="mini" type="primary" icon="el-icon-edit"
+              >Edit</el-button
+            >
+            <el-button size="mini" type="danger" icon="el-icon-delete"
+              >Delete</el-button
+            >
+            <el-button
+              size="mini"
+              type="warning"
+              icon="el-icon-setting"
+              @click="showSetRightDialog(scope.row)"
+              >Distribute</el-button
+            >
+          </template>
+        </el-table-column>
       </el-table>
     </el-card>
   </div>
@@ -31,6 +44,7 @@
 
 <script>
 export default {
+  // video 11
   data () {
     return {
       // role list data
