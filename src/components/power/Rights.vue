@@ -3,18 +3,18 @@
     <h3>
       <!--  breadcrum navigation -->
       <el-breadcrumb separator-class="el-icon-arrow-right">
-        <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>权限管理</el-breadcrumb-item>
-        <el-breadcrumb-item>权限列表</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/home' }">Homepage</el-breadcrumb-item>
+        <el-breadcrumb-item>Adminstration </el-breadcrumb-item>
+        <el-breadcrumb-item>Permission List</el-breadcrumb-item>
       </el-breadcrumb>
 
       <!-- card view -->
       <el-card>
-        <el-table :data= 'rightsList'>
+        <el-table :data= 'rightsList' border >
           <el-table-column type ='index' ></el-table-column>
-          <el-table-column label= 'Right name' prop='authName'></el-table-column>
-          <el-table-column label="路径" prop="path"></el-table-column>
-          <el-table-column label="权限等级" prop="level"></el-table-column>
+          <el-table-column label= 'Root name' prop='authName'></el-table-column>
+          <el-table-column label="Path" prop="path"></el-table-column>
+          <el-table-column label="Root level" prop="level"></el-table-column>
           <!--插槽使用失败，并没有按计划出现 -->
           <template slot-scope= ''>
             <el-tag v-if ='this.getRightsList.level === "0"'>level 1</el-tag>
@@ -45,7 +45,7 @@ export default {
         return this.$message.error('get the rights list unsuccessful')
       }
       this.rightsList = res.data
-      console.log(this.rightsList)
+      // console.log(this.rightsList)
     }
   }
 }
